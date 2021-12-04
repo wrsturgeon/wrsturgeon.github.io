@@ -1,7 +1,58 @@
-h1 {
-    font-family: 'Karla', sans-serif;
+body {
+    margin: 0; /* Counteracting defaults */
+    background-color: #FFFFFF;
+    text-rendering: geometricPrecision;
 }
 
-p {
-    font-family: 'Karla', sans-serif;
+p {margin: 0;} /* Counteracting defaults */
+
+#full-top {
+    height: 100vh;
+}
+
+#montage {
+    object-fit: cover;
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    mix-blend-mode: difference;
+    z-index: -1;
+}
+
+h1 {
+    font-family: 'Jost', system-ui, sans-serif;
+    font-weight: 500;
+    font-size: 72px;
+    letter-spacing: -0.025em;
+}
+
+#huge-ass-mf-label {
+
+    /* Display centered over video */
+    height: 100vh;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    /* Set font */
+    font-family: 'Jost', system-ui, sans-serif;
+    font-weight: 300;
+    font-size: 10vw;
+    letter-spacing: -0.025em;
+
+    /* Invert color against background */
+    color: #FFFFFF;
+    mix-blend-mode: difference;
+}
+
+#everything-else {
+    padding: 10vw;
+    background-color: #000000;
+    height: 100%;
+    font-family: 'Source Sans Pro', 'Karla', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    color: #FFFFFF;
+    /* font-weight: 300; */
+    font-size: 18px;
+    letter-spacing: 0.05px;
 }
