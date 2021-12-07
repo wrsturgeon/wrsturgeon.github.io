@@ -3,17 +3,89 @@
     <head>
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;500&family=Source+Sans+Pro&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="hahahahahahahahahahahahahahahaha.css">
+        <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;450&family=Source+Sans+3:wght@300;375&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="style.css">
     </head>
     <body>
         <div id="full-top">
-            <video autoplay muted loop id="montage"><source src="baroque-topologies.mp4" type="video/mp4"></video>
+            <!-- <div id="image-stack">
+                <img class="stacked-image" id="im01" src="baroque-topologies.jpeg">
+                <img class="stacked-image" id="im02" src="vermeer.jpeg">
+                <div class="inverted-half" id="invert-top"></div>
+                <div class="inverted-half" id="invert-btm"></div>
+            </div> -->
+            <video autoplay muted loop id="montage">
+                <source src="montage.mp4" type="video/mp4">
+            </video>
             <header id="huge-ass-mf-label">Will Sturgeon</header>
+            <script src="slideshow.js"></script>
         </div>
         <div id="everything-else">
-            <h1>Bio</h1>
-            <h1>Projects</h1>
+            <div id="nav-links">
+                <a href="#Bio">Bio</a><br>
+                <a href="#Projects">Projects</a><br>
+            </div>
+            <div class="dropdown">
+                <h1 class="drop-header" id="Bio">Bio</h1>
+                <div class="dropped-down">
+                    <div class="thing-place-info">
+                        <!-- <a class="image-link" href="">
+                            <img class="thumbnail" src="upenn-quad.jpeg">
+                        </a> -->
+                        <div class="text-container">
+                            <div class="top-line">
+                                <p class="thing">BS, Computer Science & Cognitive Science</p>
+                                <p class="time">2020—2024</p>
+                            </div>
+                            <p class="place">University of Pennsylvania</p>
+                            <div class="info">
+                                <p>Cumulative GPA: 3.8/4.0</p>
+                                <p>Head of Web Design, t-art Magazine</p>
+                                <p>Computer Vision Developer, Robotic Soccer Team (UPennalizers)</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="thing-place-info">
+                        <!-- <a class="image-link" href="">
+                            <img class="thumbnail" src="fisher_fine_arts_library_furness.jpeg">
+                        </a> -->
+                        <div class="text-container">
+                            <div class="top-line">
+                                <p class="thing">Manager, 3D Scanning & Printing Lab</p>
+                                <p class="time">2021—present</p>
+                            </div>
+                            <p class="place">UPenn Fisher Materials Library</p>
+                            <div class="info">
+                                <p>Personally coordinate all projects across campus teach teams to use >$100k of state-of-the-art technology</p>
+                                <p>Featured in NeurIPS & ICCV, ABC News, and Penn Museum exhibits on Egyptian architecture & hieroglyphs</p>
+                                <p>Grew from 1 client last year to 15 in my first month alone from networking, quick turnaround, and quality work</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="thing-place-info">
+                        <!-- <a class="image-link" href="">
+                            <img class="thumbnail" src="borromini_san_carlino.jpeg">
+                        </a> -->
+                        <div class="text-container">
+                            <div class="top-line">
+                                <p class="thing">Machine Learning Lead</p>
+                                <p class="time">2020: Summer Internship</p>
+                            </div>
+                            <p class="place">Baroque Topologies</p>
+                            <div class="info">
+                                <p>Personally coordinate all projects across campus teach teams to use >$100k of state-of-the-art technology</p>
+                                <p>Featured in NeurIPS & ICCV, ABC News, and Penn Museum exhibits on Egyptian architecture & hieroglyphs</p>
+                                <p>Grew from 1 client last year to 15 in my first month alone from networking, quick turnaround, and quality work</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="dropdown">
+                <h1 class="drop-header" id="Projects">Projects</h1>
+                <div class="dropped-down"></div>
+            </div>
+            <script src="dropdown.js"></script>
         </div>
     </body>
 </html>
