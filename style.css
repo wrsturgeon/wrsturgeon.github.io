@@ -26,6 +26,11 @@ a {
     z-index: -1;
 }
 
+@font-face {
+    font-family: 'Magnificat';
+    src: url('resources/fonts/Magnificat.ttf');
+}
+
 #huge-ass-mf-label {
 
     /* Display centered over video */
