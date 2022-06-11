@@ -26,11 +26,6 @@ a {
     z-index: -1;
 }
 
-@font-face {
-    font-family: 'Magnificat';
-    src: url('resources/fonts/Magnificat.ttf');
-}
-
 #huge-ass-mf-label {
 
     /* Display centered over video */
@@ -42,7 +37,7 @@ a {
     z-index: -1;
 
     /* Set font */
-    font-family: 'Magnificat', 'Jost', system-ui, sans-serif;
+    font-family: 'Jost', system-ui, sans-serif;
     font-weight: 300;
     font-size: 10vw;
     letter-spacing: -0.04em;
