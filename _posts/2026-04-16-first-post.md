@@ -15,7 +15,7 @@ and the original chat transcript is [here](https://chatgpt.com/share/69dd1c83-b1
 
 Some [comments from working mathematicians](https://www.erdosproblems.com/forum/thread/1196) are particularly illuminating:
 
-* My former colleague Jared Lichtman, a number theorist at Stanford (who famously proved a related result):
+* My former colleague Jared Lichtman, a number theorist at Stanford:
   > I care deeply about this problem, and I've been thinking about it for the past 7 years.
   > I'd frequently talk to Maynard about it in our meetings, and consulted over the years with several experts (Granville, Pomerance, Sound, Fox...) and others at Oxford and Stanford.
   > This problem was not a question of low-visibility per-se. Rather, it seems like a proof which becomes strikingly compact post-hoc, but the construction is quite special among many similar variations.
@@ -32,9 +32,6 @@ In eighty minutes, an agent found a chess opening that humans hadn't considered,
 
 Tony Feng, a number theorist at Berkeley, [makes](https://x.com/tonylfeng/status/2044214579350384710) this point:
 "Impressive. We hear a lot about the jaggedness of AI capabilities, but in this case it feels like human mathematical understanding was jagged."
-
-And Levent Alpöge, a junior fellow at Harvard, [puts](https://x.com/__alpoge__/status/2044246315182502058) the final nail in the coffin:
-"Hm. Appears the overhyped stochastic parrots understand aspects of the anatomy of integers better than humanity"
 
 # Curry-Howard
 
@@ -73,5 +70,3 @@ These formal verification agents are publicly accessible. Harmonic's Aristotle, 
 Except one thing. Your favorite project is almost certainly *not* correct. And what happens when these verification systems can't find a proof, but they know why? They hand you a refutation.
 
 What does a refutation look like, if your question was "is the Linux kernel secure?"
-
-That's right. You get a vulnerability.
