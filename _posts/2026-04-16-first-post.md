@@ -4,7 +4,7 @@ date: 2026-04-16
 excerpt: On the upcoming tsunami of AI-discovered vulnerabilities
 ---
 
-# AI is very good at math
+# AI is pretty darn good at math
 
 Yesterday, an artificial intelligence agent, GPT 5.4 Pro, did what mathematicians had long considered impossible:
 GPT proved a conjecture which mathematicians had long considered interesting, and on which many had worked intermittently for years,
@@ -38,4 +38,40 @@ And Levent Alpöge, a junior fellow at Harvard, [puts](https://x.com/__alpoge__/
 
 # Curry-Howard
 
-TODO
+K, great, but you're not a mathematician: who cares?
+
+The rhetoric above, about jagged mathematical aptitude and blindness to novel strategies, reminds me of computer scientists' attitudes toward testing and edge cases.
+Entire paradigms, like property-based testing, have been created and proselytized to further the notion that humans are particularly bad at thinking outside the box.
+As a result, it should surprise no one that advanced AI models are finding vulnerabilities in longstanding systems, as has famously been alleged about Claude Mythos.
+
+But there's a deeper connection between "mathematical" edge cases and "computational" edge cases.
+There's a mysterious connection between pure math and ordinary programming that literally changed the course of my life when I first discovered it.
+The concept is called the Curry-Howard correspondence, and, in short, it states that
+*writing a program with some type signature* is **exactly** the same as *writing a proof of some statement*.
+If you can show that some type "means" some statement and hand me a program that type-checks, then you've just proven to me, beyond any doubt, that you've told me the truth.
+
+Because of this correspondence, we can take some programming language — say, C — and make a precise model of how it works:
+for example, by translating the C standard into a few hundred very carefully constructed types that mean things like "undefined behavior happens here."
+(This may sound absurd, but a group of very smart people have done it, building on the work of very funny French geniuses who named their language Coq. Both teams knew exactly what they were doing.)
+Then, if you hand me your C code, I can prove things about it: for example, it doesn't crash, and it outputs 42, no matter how or where it's run.
+I can do this once and for all, without ever running your program, and the only requirement is that I'm sufficiently good at math.
+
+The problem is that this particular kind of math, writing down exact programs and types, is almost unbearably long-winded. Translating the proof of the four-color theorem took five years.
+
+# Takeoff
+
+This is a somewhat sad state of affairs. We have a giant orbital laser that can erase all bugs from orbit, but no one can figure out the right settings to turn it on.
+It's like [we went to space with two broken Microsoft Outlook installs](https://www.404media.co/artemis-2-astronauts-microsoft-outlook-livestream/).
+With that in mind, I was beyond excited to join Math, Inc., a real company that's really named that, to work on dedicated AI agents to write formalizations automatically.
+I left a few months ago, but not before making vast progress on an agent we named Gauss, which went on to formalize Maryna Viazovska's Fields Medal-winning result on optimal sphere packing in both 8 and 24 dimensions.
+The [final pull request](https://github.com/thefundamentaltheor3m/Sphere-Packing-Lean/pull/341) before an airtight proof added more than fifty two thousand lines of code.
+
+# OK, what's this all really about?
+
+These formal verification agents are publicly accessible. Harmonic's Aristotle, for example, is even free. This seems like a great state of affairs! Everyone will prove their favorite open-source project formally correct!
+
+Except one thing. Your favorite project is almost certainly *not* correct. And what happens when these verification systems can't find a proof, but they know why? They hand you a refutation.
+
+What does a refutation look like, if your question was "is the Linux kernel secure?"
+
+That's right. You get a vulnerability.
