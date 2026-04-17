@@ -8,7 +8,7 @@
   --muted: #555555;
   --rule: #cccccc;
   --surface: rgba(0, 0, 0, 0.1);
-  --matrix-dot: rgba(0, 0, 0, 0.12);
+  --matrix-dot: rgba(0, 0, 0, 0.1);
 }
 
 * {
@@ -23,7 +23,7 @@
     --muted: #bbbbbb;
     --rule: #444444;
     --surface: rgba(255, 255, 255, 0.2);
-    --matrix-dot: rgba(255, 255, 255, 0.22);
+    --matrix-dot: rgba(255, 255, 255, 0.2);
   }
 }
 
@@ -34,7 +34,7 @@
   --muted: #555555;
   --rule: #cccccc;
   --surface: rgba(0, 0, 0, 0.1);
-  --matrix-dot: rgba(0, 0, 0, 0.12);
+  --matrix-dot: rgba(0, 0, 0, 0.1);
 }
 
 :root[data-theme="dark"] {
@@ -44,7 +44,7 @@
   --muted: #bbbbbb;
   --rule: #444444;
   --surface: rgba(255, 255, 255, 0.2);
-  --matrix-dot: rgba(255, 255, 255, 0.22);
+  --matrix-dot: rgba(255, 255, 255, 0.2);
 }
 
 body {

@@ -86,7 +86,7 @@
     var row = 0;
     var column = 0;
     var styles = window.getComputedStyle(document.documentElement);
-    var fillColor = styles.getPropertyValue("--matrix-dot").trim() || "rgba(255, 255, 255, 0.22)";
+    var fillColor = styles.getPropertyValue("--matrix-dot").trim() || "rgba(255, 255, 255, 0.2)";
 
     if (!geometry) {
       return;
