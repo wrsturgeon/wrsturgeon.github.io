@@ -2,11 +2,25 @@
 
 ## Purpose
 
-This repository is a GitHub Pages personal site with:
+This repository is a GitHub Pages personal site for Will Sturgeon with:
 
-- a simple professional front page
-- project highlights
-- occasional blog posts
+- a minimal professional home page
+- a writing section for occasional blog posts
+- room for future project highlights
+
+## Current State
+
+The site is bootstrapped and currently includes:
+
+- a minimal home page at `/`
+- a `Writing` page at `/writing/`
+- individual posts from `_posts/`
+- a simple RSS/Atom feed at `/feed.xml`
+
+For now:
+
+- `About` links may 404
+- `Projects` links may 404
 
 ## Stack Decision
 
@@ -25,7 +39,13 @@ Do not use raw TypeScript in the published site. Browsers need JavaScript. If Ty
 - Deployment target: GitHub Pages
 - Theme approach: custom theme/layouts rather than a stock supported theme
 
-Preferred GitHub Pages-compatible plugins:
+Current implementation:
+
+- custom layouts in `_layouts/`
+- custom SCSS in `assets/css/main.scss`
+- local `feed.xml` template for RSS/Atom output
+
+Preferred GitHub Pages-compatible plugins for a later pass:
 
 - `jekyll-feed`
 - `jekyll-seo-tag`
@@ -44,29 +64,38 @@ Prefer the simplest stack that preserves a polished result.
 - Avoid React, Next.js, Tailwind, or other heavy frontend tooling unless the site requirements clearly justify the extra build complexity.
 - If we later need unsupported Jekyll plugins, TypeScript, or more advanced asset processing, switch deployment from the default GitHub Pages Jekyll build to a custom GitHub Actions build while still publishing a static site.
 
-## Nix Development Environment
+## Authoring Workflow
+
+Posts should be created directly in `_posts/` as Markdown files with YAML front matter.
+
+Expected filename format:
+
+- `YYYY-MM-DD-slug.md`
+
+Expected front matter:
+
+- `layout`
+- `title`
+- `date`
+- optional `excerpt`
+- optional `tags`
+
+## Development Notes
 
 This repository includes a Nix flake-based development shell.
 
-- Enter it with `nix develop`.
-- The shell is defined in `flake.nix`.
-- `flake.lock` now exists and should be committed alongside `flake.nix`.
+- Enter it with `nix develop`
+- The shell is defined in `flake.nix`
+- `flake.lock` should be committed alongside `flake.nix`
 
-Current dev shell contents:
+The current flake is intentionally minimal. It may be extended with additional packages if the local development workflow requires them.
 
-- Ruby `3.3`
-- Bundler
-- Node.js `22`
-- `git`
-- native build dependencies commonly needed by Jekyll gems on NixOS
+## Near-Term Priorities
 
-Bundler is configured to install gems into a repo-local `.bundle` directory via shell environment variables. This keeps Ruby dependencies local to the project.
-
-Status:
-
-- Nix environment setup is finished and evaluates successfully.
-- The site itself is not bootstrapped yet.
-- We still need to add a `Gemfile`, install Jekyll/GitHub Pages gems, and create the actual site structure.
+- keep the home page minimal and typographically strong
+- improve the writing/post infrastructure as needed
+- later add real `About` and `Projects` pages
+- optionally move from the local feed template to GitHub Pages-compatible plugins and a `Gemfile`
 
 ## References
 
