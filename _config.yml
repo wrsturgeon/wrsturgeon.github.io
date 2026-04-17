@@ -1,0 +1,21 @@
+title: Will Sturgeon
+description: Personal website and writing
+url: ""
+baseurl: ""
+permalink: /:year/:month/:day/:title/
+markdown: kramdown
+exclude:
+  - AGENTS.md
+  - PLAN.md
+  - flake.nix
+  - flake.lock
+  - .direnv
+  - .envrc
+  - .codex
+
+defaults:
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: post
