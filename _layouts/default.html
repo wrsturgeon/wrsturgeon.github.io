@@ -20,19 +20,20 @@
     </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Inter+Tight:ital,wght@0,100..900;1,100..900&display=swap">
     <link rel="icon" href="{{ '/favicon.svg' | relative_url }}" type="image/svg+xml">
     <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
     <link rel="alternate" type="application/atom+xml" title="{{ site.title }}" href="{{ '/feed.xml' | relative_url }}">
   </head>
   <body>
     <header class="site-header">
-      <div class="site-header-row">
+      <div class="site-header-inner">
         <nav class="site-nav" aria-label="Primary">
           <a href="{{ '/about/' | relative_url }}">About</a>
           <a href="{{ '/writing/' | relative_url }}">Writing</a>
           <a href="{{ '/projects/' | relative_url }}">Projects</a>
         </nav>
+        <a class="site-title-link" href="{{ '/' | relative_url }}">{{ site.title }}</a>
         <label class="theme-toggle" for="theme-toggle">
           <span>Dark</span>
           <span class="theme-toggle-control">

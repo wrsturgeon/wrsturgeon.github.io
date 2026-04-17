@@ -1,6 +1,11 @@
 ---
 layout: default
 ---
+<div class="post-bar">
+  <div class="post-bar-inner">
+    <a class="post-bar-title" href="{{ page.url | relative_url }}">{{ page.title }}</a>
+  </div>
+</div>
 <article class="post">
   <header class="post-header">
     <p class="post-date">{{ page.date | date: "%B %-d, %Y" }}</p>
@@ -8,3 +13,24 @@ layout: default
   </header>
   {{ content }}
 </article>
+<script>
+  (function() {
+    var siteHeader = document.querySelector(".site-header");
+    var postHeader = document.querySelector(".post-header");
+    var postBar = document.querySelector(".post-bar");
+
+    if (!siteHeader || !postHeader || !postBar) {
+      return;
+    }
+
+    function updatePostBar() {
+      var headerHeight = siteHeader.getBoundingClientRect().height;
+      var shouldShow = postHeader.getBoundingClientRect().bottom <= headerHeight;
+      postBar.classList.toggle("is-visible", shouldShow);
+    }
+
+    updatePostBar();
+    window.addEventListener("scroll", updatePostBar, { passive: true });
+    window.addEventListener("resize", updatePostBar);
+  })();
+</script>
