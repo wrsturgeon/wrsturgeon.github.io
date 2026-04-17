@@ -4,6 +4,8 @@ date: 2026-04-16
 excerpt: On the upcoming tsunami of AI-discovered vulnerabilities
 ---
 
+Written while visiting a [friend](https://alok.github.io) at [Inkhaven](https://www.inkhaven.blog). Created this site, and wrote this post, in two hours. Needs some polish, but I stand by its contents.
+
 # AI is pretty darn good at math
 
 Yesterday, an artificial intelligence agent, GPT 5.4 Pro, did what mathematicians had long considered impossible:
