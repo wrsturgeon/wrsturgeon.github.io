@@ -5,6 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% if page.title %}{{ page.title }} | {% endif %}{{ site.title }}</title>
     <meta name="description" content="{{ page.excerpt | default: site.description | strip_html | strip_newlines | escape_once }}">
+    <script>
+      (function() {
+        var savedTheme = null;
+        try {
+          savedTheme = localStorage.getItem("theme");
+        } catch (error) {
+          savedTheme = null;
+        }
+        if (savedTheme === "light" || savedTheme === "dark") {
+          document.documentElement.dataset.theme = savedTheme;
+        }
+      })();
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400&display=swap">
@@ -14,14 +27,72 @@
   </head>
   <body>
     <header class="site-header">
-      <nav class="site-nav" aria-label="Primary">
-        <a href="{{ '/about/' | relative_url }}">About</a>
-        <a href="{{ '/writing/' | relative_url }}">Writing</a>
-        <a href="{{ '/projects/' | relative_url }}">Projects</a>
-      </nav>
+      <div class="site-header-row">
+        <nav class="site-nav" aria-label="Primary">
+          <a href="{{ '/about/' | relative_url }}">About</a>
+          <a href="{{ '/writing/' | relative_url }}">Writing</a>
+          <a href="{{ '/projects/' | relative_url }}">Projects</a>
+        </nav>
+        <label class="theme-toggle" for="theme-toggle">
+          <span>Dark</span>
+          <span class="theme-toggle-control">
+            <input id="theme-toggle" type="checkbox" aria-label="Toggle dark mode">
+            <span class="theme-toggle-slider" aria-hidden="true"></span>
+          </span>
+        </label>
+      </div>
     </header>
     <main>
       {{ content }}
     </main>
+    <script>
+      (function() {
+        var root = document.documentElement;
+        var toggle = document.getElementById("theme-toggle");
+        var mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+
+        function getPreferredTheme() {
+          var savedTheme = null;
+          try {
+            savedTheme = localStorage.getItem("theme");
+          } catch (error) {
+            savedTheme = null;
+          }
+          if (savedTheme === "light" || savedTheme === "dark") {
+            return savedTheme;
+          }
+          return mediaQuery.matches ? "dark" : "light";
+        }
+
+        function applyTheme(theme) {
+          root.dataset.theme = theme;
+          toggle.checked = theme === "dark";
+        }
+
+        applyTheme(getPreferredTheme());
+
+        toggle.addEventListener("change", function() {
+          var theme = toggle.checked ? "dark" : "light";
+          root.dataset.theme = theme;
+          try {
+            localStorage.setItem("theme", theme);
+          } catch (error) {
+            // Ignore storage failures and keep the session-local toggle behavior.
+          }
+        });
+
+        mediaQuery.addEventListener("change", function(event) {
+          var savedTheme = null;
+          try {
+            savedTheme = localStorage.getItem("theme");
+          } catch (error) {
+            savedTheme = null;
+          }
+          if (savedTheme !== "light" && savedTheme !== "dark") {
+            applyTheme(event.matches ? "dark" : "light");
+          }
+        });
+      })();
+    </script>
   </body>
 </html>
