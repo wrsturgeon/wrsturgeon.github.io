@@ -4,7 +4,7 @@ date: 2026-04-16
 excerpt: On the upcoming tsunami of AI-discovered vulnerabilities
 ---
 
-Written while visiting a [friend](https://alok.github.io) at [Inkhaven](https://www.inkhaven.blog). Created this site, and wrote this post, in two hours. Needs some polish, but I stand by its contents.
+Written while visiting a [friend](https://alok.github.io) at [Inkhaven](https://www.inkhaven.blog). Created this site and wrote this post in two hours total. Needs some polish and a proper ending, but I stand by its contents.
 
 # AI is pretty darn good at math
 
@@ -21,7 +21,7 @@ Some [comments from working mathematicians](https://www.erdosproblems.com/forum/
   > I care deeply about this problem, and I've been thinking about it for the past 7 years.
   > I'd frequently talk to Maynard about it in our meetings, and consulted over the years with several experts (Granville, Pomerance, Sound, Fox...) and others at Oxford and Stanford.
   > This problem was not a question of low-visibility per-se. Rather, it seems like a proof which becomes strikingly compact post-hoc, but the construction is quite special among many similar variations.
-* Jared again, [elsewhere](https://x.com/jdlichtman/status/2044298382852927894):
+* Jared [again](https://x.com/jdlichtman/status/2044298382852927894):
   > The closest analogy I would give would be that the main openings in chess were well-studied, but AI discovers a new opening line that had been overlooked based on human aesthetics and convention.
 * Terence Tao, widely considered the greatest living mathematician:
   > . . . the AI-generated paper inadvertently highlighted a tighter connection between two areas of mathematics . . . than had previously been made explicit in the literature (though there were hints and precursors scattered therein which one can see in retrospect).
