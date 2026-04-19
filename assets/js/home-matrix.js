@@ -19,7 +19,11 @@
   var lastStepTime = 0;
   var geometry = null;
   var cells = [];
+  var flipStreaks = [];
   var injectionBudget = 0;
+  var isPointerActive = false;
+  var lastPointerPoint = null;
+  var MAX_FLIP_STREAK = 12;
 
   function createCells(rows, columns) {
     var nextCells = [];
@@ -63,6 +67,7 @@
     }
 
     cells = createCells(rows, columns);
+    flipStreaks = createCells(rows, columns);
   }
 
   function resizeCanvas() {
@@ -80,6 +85,111 @@
     geometry = getGeometry(width, height);
     ensureCells(geometry.rows, geometry.columns);
     draw();
+  }
+
+  function clamp(value, min, max) {
+    return Math.max(min, Math.min(max, value));
+  }
+
+  function getCellFromPoint(clientX, clientY) {
+    var bounds = canvas.getBoundingClientRect();
+    var x = clientX - bounds.left;
+    var y = clientY - bounds.top;
+
+    if (!geometry) {
+      return null;
+    }
+
+    return {
+      row: clamp(
+        Math.round((y - geometry.offsetY) / geometry.pitch),
+        0,
+        geometry.rows - 1
+      ),
+      column: clamp(
+        Math.round((x - geometry.offsetX) / geometry.pitch),
+        0,
+        geometry.columns - 1
+      )
+    };
+  }
+
+  function activateCell(row, column) {
+    if (!geometry) {
+      return;
+    }
+
+    cells[row][column] = 1;
+  }
+
+  function activatePath(fromPoint, toPoint) {
+    var dx = 0;
+    var dy = 0;
+    var distance = 0;
+    var steps = 0;
+    var stepIndex = 0;
+
+    if (!geometry) {
+      return;
+    }
+
+    dx = toPoint.x - fromPoint.x;
+    dy = toPoint.y - fromPoint.y;
+    distance = Math.max(Math.abs(dx), Math.abs(dy));
+    steps = Math.max(1, Math.ceil(distance / Math.max(1, geometry.pitch / 2)));
+
+    for (stepIndex = 0; stepIndex <= steps; stepIndex += 1) {
+      var progress = stepIndex / steps;
+      var cell = getCellFromPoint(
+        fromPoint.x + dx * progress,
+        fromPoint.y + dy * progress
+      );
+
+      if (cell) {
+        activateCell(cell.row, cell.column);
+      }
+    }
+
+    draw();
+  }
+
+  function handlePointerDown(event) {
+    isPointerActive = true;
+    lastPointerPoint = {
+      x: event.clientX,
+      y: event.clientY
+    };
+
+    if ("setPointerCapture" in canvas) {
+      canvas.setPointerCapture(event.pointerId);
+    }
+
+    activatePath(lastPointerPoint, lastPointerPoint);
+  }
+
+  function handlePointerMove(event) {
+    var nextPoint = null;
+
+    if (!isPointerActive || !lastPointerPoint) {
+      return;
+    }
+
+    nextPoint = {
+      x: event.clientX,
+      y: event.clientY
+    };
+
+    activatePath(lastPointerPoint, nextPoint);
+    lastPointerPoint = nextPoint;
+  }
+
+  function handlePointerEnd(event) {
+    if ("releasePointerCapture" in canvas && canvas.hasPointerCapture(event.pointerId)) {
+      canvas.releasePointerCapture(event.pointerId);
+    }
+
+    isPointerActive = false;
+    lastPointerPoint = null;
   }
 
   function draw() {
@@ -146,6 +256,7 @@
 
   function step() {
     var nextCells = [];
+    var nextFlipStreaks = [];
     var row = 0;
     var column = 0;
     var birthCount = 0;
@@ -181,7 +292,25 @@
     }
 
     injectRandomFlips(nextCells, injectionBudget);
+
+    for (row = 0; row < geometry.rows; row += 1) {
+      nextFlipStreaks[row] = [];
+      for (column = 0; column < geometry.columns; column += 1) {
+        var didFlip = cells[row][column] !== nextCells[row][column];
+        var nextFlipStreak = didFlip ? flipStreaks[row][column] + 1 : 0;
+
+        if (nextFlipStreak >= MAX_FLIP_STREAK) {
+          nextCells[row][column] = 0;
+          nextFlipStreaks[row][column] = 0;
+          continue;
+        }
+
+        nextFlipStreaks[row][column] = nextFlipStreak;
+      }
+    }
+
     cells = nextCells;
+    flipStreaks = nextFlipStreaks;
   }
 
   function injectRandomFlips(grid, flipCount) {
@@ -194,20 +323,23 @@
 
     while (chosen.size < flipCount && chosen.size < totalCells) {
       var index = Math.floor(Math.random() * totalCells);
+      var row = Math.floor(index / geometry.columns);
+      var column = index % geometry.columns;
 
       if (chosen.has(index)) {
         continue;
       }
 
-      if (shouldSkipIsolatedFlip(
-        Math.floor(index / geometry.columns),
-        index % geometry.columns
-      )) {
+      if (grid[row][column] === 1 && Math.random() < 0.5) {
+        continue;
+      }
+
+      if (shouldSkipIsolatedFlip(row, column)) {
         continue;
       }
 
       chosen.add(index);
-      grid[Math.floor(index / geometry.columns)][index % geometry.columns] ^= 1;
+      grid[row][column] ^= 1;
     }
   }
 
@@ -245,6 +377,10 @@
 
   resizeCanvas();
   animationFrameId = window.requestAnimationFrame(tick);
+  canvas.addEventListener("pointerdown", handlePointerDown);
+  canvas.addEventListener("pointermove", handlePointerMove);
+  canvas.addEventListener("pointerup", handlePointerEnd);
+  canvas.addEventListener("pointercancel", handlePointerEnd);
 
   document.addEventListener("visibilitychange", function() {
     if (document.hidden && animationFrameId) {

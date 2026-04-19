@@ -56,6 +56,12 @@ body {
   line-height: 1.5;
 }
 
+body.page-has-matrix {
+  min-height: 100vh;
+  min-height: 100dvh;
+  overflow: hidden;
+}
+
 a {
   color: inherit;
 }
@@ -80,13 +86,14 @@ main,
   position: fixed;
   inset: 0;
   z-index: 0;
-  pointer-events: none;
+  pointer-events: auto;
 }
 
 .site-matrix-canvas {
   display: block;
   width: 100%;
   height: 100%;
+  touch-action: none;
 }
 
 .page-has-matrix .site-header,
@@ -97,6 +104,12 @@ main,
 
 .page-has-matrix .site-header {
   background: transparent;
+}
+
+.page-has-matrix main {
+  min-height: calc(100vh - 4rem);
+  min-height: calc(100dvh - 4rem);
+  pointer-events: none;
 }
 
 .site-header-inner {
@@ -238,6 +251,7 @@ main,
 
 .home {
   min-height: calc(100vh - 4rem);
+  min-height: calc(100dvh - 4rem);
   position: relative;
   isolation: isolate;
   display: grid;
