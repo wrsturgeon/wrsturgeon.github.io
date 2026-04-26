@@ -8,7 +8,7 @@
   --muted: #555555;
   --rule: #cccccc;
   --surface: rgba(0, 0, 0, 0.1);
-  --matrix-dot: rgba(0, 0, 0, 0.1);
+  --matrix-dot: #000000;
 }
 
 * {
@@ -23,7 +23,7 @@
     --muted: #bbbbbb;
     --rule: #444444;
     --surface: rgba(255, 255, 255, 0.2);
-    --matrix-dot: rgba(255, 255, 255, 0.2);
+    --matrix-dot: #ffffff;
   }
 }
 
@@ -34,7 +34,7 @@
   --muted: #555555;
   --rule: #cccccc;
   --surface: rgba(0, 0, 0, 0.1);
-  --matrix-dot: rgba(0, 0, 0, 0.1);
+  --matrix-dot: #000000;
 }
 
 :root[data-theme="dark"] {
@@ -44,7 +44,7 @@
   --muted: #bbbbbb;
   --rule: #444444;
   --surface: rgba(255, 255, 255, 0.2);
-  --matrix-dot: rgba(255, 255, 255, 0.2);
+  --matrix-dot: #ffffff;
 }
 
 body {
@@ -59,6 +59,11 @@ body {
 body.page-has-matrix {
   min-height: 100vh;
   min-height: 100dvh;
+  // background-image: url("https://www.anl.gov/sites/www/files/historical_neutrino_feature.jpg");
+  // background-position: center;
+  // background-size: cover;
+  // background-repeat: no-repeat;
+  // background-attachment: fixed;
   overflow: hidden;
 }
 
@@ -252,11 +257,16 @@ main,
 .home {
   min-height: calc(100vh - 4rem);
   min-height: calc(100dvh - 4rem);
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  padding-left: clamp(2.5rem, 10vw, 12rem);
+  padding-right: clamp(2.5rem, 10vw, 12rem);
   position: relative;
   isolation: isolate;
   display: grid;
   align-items: center;
-  justify-content: center;
+  justify-content: start;
   overflow: hidden;
 }
 
@@ -267,11 +277,11 @@ main,
 
 .home h1 {
   margin: 0;
-  font-size: clamp(4rem, 14vw, 9rem);
+  font-size: clamp(3rem, 10.5vw, 6.75rem);
   line-height: 0.98;
   font-family: "Inter Tight", "Inter", sans-serif;
   font-weight: 700;
-  text-align: center;
+  text-align: left;
 }
 
 .home-matrix {

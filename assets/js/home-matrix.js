@@ -196,7 +196,7 @@
     var row = 0;
     var column = 0;
     var styles = window.getComputedStyle(document.documentElement);
-    var fillColor = styles.getPropertyValue("--matrix-dot").trim() || "rgba(255, 255, 255, 0.2)";
+    var fillColor = styles.getPropertyValue("--matrix-dot").trim() || "#808080";
 
     if (!geometry) {
       return;
@@ -239,7 +239,16 @@
         }
 
         neighborRow = (row + rowOffset + geometry.rows) % geometry.rows;
-        neighborColumn = (column + columnOffset + geometry.columns) % geometry.columns;
+        neighborColumn = column + columnOffset;
+
+        if (neighborColumn < 0) {
+          continue;
+        }
+
+        if (neighborColumn >= geometry.columns) {
+          continue;
+        }
+
         count += cells[neighborRow][neighborColumn];
       }
     }
@@ -247,11 +256,48 @@
     return count;
   }
 
-  function shouldSkipIsolatedFlip(row, column) {
-    var area = geometry.rows * geometry.columns;
-    var skipProbability = 1 - 1 / Math.sqrt(area);
+  function getActivationPenalty(row, column) {
+    var horizontalPenalty = 0;
+    var horizontalProgress = 0;
+    var horizontalSteepness = 16;
+    var verticalPenalty = 1;
+    var verticalCenter = (geometry.rows - 1) / 2;
 
-    return countNeighbors(row, column) === 0 && Math.random() < skipProbability;
+    if (geometry.columns > 1) {
+      horizontalProgress = column / (geometry.columns - 1);
+      horizontalPenalty = 1 / (1 + Math.exp(horizontalSteepness * (horizontalProgress - 0.5)));
+    }
+
+    if (verticalCenter > 0) {
+      verticalPenalty = 1 - Math.abs(row - verticalCenter) / verticalCenter;
+      verticalPenalty *= verticalPenalty;
+    }
+
+    return horizontalPenalty * verticalPenalty;
+  }
+
+  function shouldRejectActivation(row, column) {
+    return Math.random() < getActivationPenalty(row, column);
+  }
+
+  function shouldSkipIsolatedFlip(row, column) {
+    // If we're turning a dot off, prefer those on the left side of the screen.
+    if (cells[row][column]) {
+      return Math.random() * geometry.columns < column;
+    }
+    // Prefer activating dots on the right side of the screen.
+    if (Math.random() * geometry.columns > column) {
+      return true;
+    }
+    // Prefer dots with neighbors.
+    if (countNeighbors(row, column) != 0) {
+      return false;
+    }
+    // Otherwise, proceed anyway with some probability,
+    // e.g. for cold starts.
+    var area = geometry.rows * geometry.columns;
+    var skipProbability = 0.1 / Math.sqrt(area);
+    return Math.random() > skipProbability;
   }
 
   function step() {
@@ -272,7 +318,7 @@
 
         if (isAlive && (neighbors === 2 || neighbors === 3)) {
           nextCells[row][column] = 1;
-        } else if (!isAlive && neighbors === 3) {
+        } else if (!isAlive && neighbors === 3 && !shouldRejectActivation(row, column)) {
           nextCells[row][column] = 1;
         } else {
           nextCells[row][column] = 0;
@@ -330,11 +376,11 @@
         continue;
       }
 
-      if (grid[row][column] === 1 && Math.random() < 0.5) {
+      if (shouldSkipIsolatedFlip(row, column)) {
         continue;
       }
 
-      if (shouldSkipIsolatedFlip(row, column)) {
+      if (grid[row][column] === 0 && shouldRejectActivation(row, column)) {
         continue;
       }
 
