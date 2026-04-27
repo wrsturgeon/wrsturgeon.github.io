@@ -6,7 +6,7 @@
   }
 
   var context = canvas.getContext("2d");
-  var COLUMN_COUNT = 128;
+  var ROW_COUNT = 80;
   var STEP_MS = 62.5;
 
   if (!context) {
@@ -41,11 +41,11 @@
   }
 
   function getGeometry(width, height) {
-    var columns = COLUMN_COUNT;
-    var pitch = width / columns;
+    var rows = ROW_COUNT;
+    var pitch = height / rows;
     var diameter = pitch / 2;
     var radius = diameter / 2;
-    var rows = Math.max(1, Math.floor(height / pitch));
+    var columns = Math.max(1, Math.floor(width / pitch));
     var gridWidth = (columns - 1) * pitch + diameter;
     var gridHeight = (rows - 1) * pitch + diameter;
 
@@ -68,6 +68,10 @@
 
     cells = createCells(rows, columns);
     flipStreaks = createCells(rows, columns);
+  }
+
+  function isLandscape() {
+    return geometry && geometry.width > geometry.height;
   }
 
   function resizeCanvas() {
@@ -238,15 +242,20 @@
           continue;
         }
 
-        neighborRow = (row + rowOffset + geometry.rows) % geometry.rows;
-        neighborColumn = column + columnOffset;
+        if (isLandscape()) {
+          neighborRow = (row + rowOffset + geometry.rows) % geometry.rows;
+          neighborColumn = column + columnOffset;
 
-        if (neighborColumn < 0) {
-          continue;
-        }
+          if (neighborColumn < 0 || neighborColumn >= geometry.columns) {
+            continue;
+          }
+        } else {
+          neighborRow = row + rowOffset;
+          neighborColumn = (column + columnOffset + geometry.columns) % geometry.columns;
 
-        if (neighborColumn >= geometry.columns) {
-          continue;
+          if (neighborRow < 0 || neighborRow >= geometry.rows) {
+            continue;
+          }
         }
 
         count += cells[neighborRow][neighborColumn];
@@ -263,14 +272,18 @@
     var verticalPenalty = 1;
     var verticalCenter = (geometry.rows - 1) / 2;
 
-    if (geometry.columns > 1) {
-      horizontalProgress = column / (geometry.columns - 1);
-      horizontalPenalty = 1 / (1 + Math.exp(horizontalSteepness * (horizontalProgress - 0.5)));
-    }
-
     if (verticalCenter > 0) {
       verticalPenalty = 1 - Math.abs(row - verticalCenter) / verticalCenter;
       verticalPenalty *= verticalPenalty;
+    }
+
+    if (!isLandscape()) {
+      return verticalPenalty;
+    }
+
+    if (geometry.columns > 1) {
+      horizontalProgress = column / (geometry.columns - 1);
+      horizontalPenalty = 1 / (1 + Math.exp(horizontalSteepness * (horizontalProgress - 0.5)));
     }
 
     return horizontalPenalty * verticalPenalty;
@@ -281,17 +294,27 @@
   }
 
   function shouldSkipIsolatedFlip(row, column) {
-    // If we're turning a dot off, prefer those on the left side of the screen.
+    // Never disable dots that are already enabled.
+    // Note that, counterintuitively, doing so
+    // might not affect an already-enabled stable bunch,
+    // so this is not what we want on the left side of the screen.
     if (cells[row][column]) {
-      return Math.random() * geometry.columns < column;
-    }
-    // Prefer activating dots on the right side of the screen.
-    if (Math.random() * geometry.columns > column) {
       return true;
     }
     // Prefer dots with neighbors.
     if (countNeighbors(row, column) != 0) {
       return false;
+    }
+    if (geometry.width > geometry.height) {
+      // Prefer activating dots on the right side of the screen.
+      if (Math.random() * geometry.columns > column) {
+        return true;
+      }
+    } else {
+      // Prefer activating dots on the bottom of the screen.
+      if (Math.random() * geometry.rows > row) {
+        return true;
+      }
     }
     // Otherwise, proceed anyway with some probability,
     // e.g. for cold starts.
@@ -385,7 +408,7 @@
       }
 
       chosen.add(index);
-      grid[row][column] ^= 1;
+      grid[row][column] = 1;
     }
   }
 

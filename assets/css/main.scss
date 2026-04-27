@@ -146,7 +146,9 @@ main,
 }
 
 .site-title-link {
-  justify-self: center;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
   text-decoration: none;
   font-family: "Inter", sans-serif;
   font-size: 0.95rem;
@@ -159,6 +161,39 @@ main,
 .site-title-link:hover,
 .site-title-link:focus-visible {
   border-bottom-color: currentColor;
+}
+
+.site-title-menu {
+  display: inline-flex;
+  align-items: center;
+  justify-self: center;
+  gap: 0.7rem;
+}
+
+.site-menu-toggle {
+  position: relative;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.site-menu-toggle::before {
+  content: "";
+  position: absolute;
+  inset: -1rem;
+}
+
+.site-menu-dots {
+  display: block;
+  width: 1.25rem;
+  height: auto;
+  fill: currentColor;
 }
 
 .theme-toggle {
@@ -229,6 +264,10 @@ main,
   pointer-events: auto;
 }
 
+.site-menu-bar {
+  display: none;
+}
+
 .post-bar-inner {
   display: flex;
   align-items: center;
@@ -260,32 +299,158 @@ main,
   width: 100vw;
   margin-left: calc(50% - 50vw);
   margin-right: calc(50% - 50vw);
-  padding-left: clamp(2.5rem, 10vw, 12rem);
-  padding-right: clamp(2.5rem, 10vw, 12rem);
+  padding-left: 0;
+  padding-right: 0;
   position: relative;
   isolation: isolate;
   display: grid;
+  grid-template-columns: 50vw 50vw;
   align-items: center;
-  justify-content: start;
   overflow: hidden;
 }
 
 .home-copy {
   position: relative;
   z-index: 1;
+  justify-self: end;
+  width: 75%;
+  margin-right: 5vw;
 }
 
 .home h1 {
   margin: 0;
-  font-size: clamp(3rem, 10.5vw, 6.75rem);
+  font-size: 6vw;
   line-height: 0.98;
   font-family: "Inter Tight", "Inter", sans-serif;
   font-weight: 700;
-  text-align: left;
+  text-align: right;
+  white-space: nowrap;
 }
 
 .home-matrix {
   display: none;
+}
+
+@media (orientation: portrait) {
+  .site-header {
+    position: sticky;
+  }
+
+  .page-has-matrix .site-header {
+    background: var(--bg);
+  }
+
+  .site-header-inner {
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas: "title toggle";
+    align-items: start;
+    min-height: 0;
+    gap: 0;
+    padding-top: 1.25rem;
+    padding-bottom: 1.25rem;
+  }
+
+  .site-nav {
+    display: none;
+  }
+
+  .site-menu-bar {
+    display: block;
+    position: fixed;
+    top: 3rem;
+    left: 0;
+    right: 0;
+    z-index: 95;
+    background: var(--bg);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 120ms ease;
+  }
+
+  .site-menu-bar.is-visible {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .site-menu-bar-inner {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 1rem;
+    min-height: 3rem;
+    width: min(100%, 72rem);
+    margin: 0 auto;
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+    font-size: 0.95rem;
+    font-family: "Inter", sans-serif;
+  }
+
+  .site-menu-bar a {
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+  }
+
+  .site-menu-bar a:hover,
+  .site-menu-bar a:focus-visible {
+    border-bottom-color: currentColor;
+  }
+
+  .site-title-menu {
+    grid-area: title;
+    justify-self: start;
+    min-width: 0;
+  }
+
+  .site-menu-toggle {
+    display: inline-flex;
+  }
+
+  .theme-toggle {
+    grid-area: toggle;
+    justify-self: end;
+    align-self: start;
+  }
+
+  .page-has-matrix .site-header {
+    position: fixed;
+    left: 0;
+    right: 0;
+  }
+
+  .page-has-matrix main {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    min-height: 100vh;
+    min-height: 100dvh;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .page-has-matrix .home {
+    min-height: 100vh;
+    min-height: 100dvh;
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+    grid-template-columns: 1fr;
+    place-items: center;
+    justify-content: center;
+  }
+
+  .page-has-matrix .home-copy {
+    justify-self: center;
+    width: auto;
+    margin-right: 0;
+  }
+
+  .page-has-matrix .home h1 {
+    font-size: clamp(3rem, 10.5vw, 6.75rem);
+    text-align: center;
+  }
 }
 
 .writing,

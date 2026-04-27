@@ -38,7 +38,16 @@
           <a href="{{ '/writing/' | relative_url }}">Writing</a>
           <a href="{{ '/projects/' | relative_url }}">Projects</a>
         </nav>
-        <a class="site-title-link" href="{{ '/' | relative_url }}">{{ site.title }}</a>
+        <div class="site-title-menu">
+          <a class="site-title-link" href="{{ '/' | relative_url }}">{{ site.title }}</a>
+          <button class="site-menu-toggle" type="button" aria-controls="site-menu-bar" aria-expanded="false" aria-label="Toggle navigation">
+            <svg class="site-menu-dots" viewBox="0 0 24 8" aria-hidden="true" focusable="false">
+              <circle cx="3.2" cy="4" r="2.64"></circle>
+              <circle cx="12" cy="4" r="2.64"></circle>
+              <circle cx="20.8" cy="4" r="2.64"></circle>
+            </svg>
+          </button>
+        </div>
         <label class="theme-toggle" for="theme-toggle">
           <span>Dark</span>
           <span class="theme-toggle-control">
@@ -48,6 +57,13 @@
         </label>
       </div>
     </header>
+    <nav id="site-menu-bar" class="site-menu-bar" aria-label="Primary menu">
+      <div class="site-menu-bar-inner">
+        <a href="{{ '/about/' | relative_url }}">About</a>
+        <a href="{{ '/writing/' | relative_url }}">Writing</a>
+        <a href="{{ '/projects/' | relative_url }}">Projects</a>
+      </div>
+    </nav>
     <main>
       {{ content }}
     </main>
@@ -56,6 +72,10 @@
         var root = document.documentElement;
         var toggle = document.getElementById("theme-toggle");
         var mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+        var portraitQuery = window.matchMedia("(orientation: portrait)");
+        var header = document.querySelector(".site-header");
+        var menuToggle = document.querySelector(".site-menu-toggle");
+        var menuBar = document.getElementById("site-menu-bar");
 
         function getPreferredTheme() {
           var savedTheme = null;
@@ -98,6 +118,51 @@
             applyTheme(event.matches ? "dark" : "light");
           }
         });
+
+        function closeMenu() {
+          if (!menuBar || !menuToggle) {
+            return;
+          }
+
+          menuBar.classList.remove("is-visible");
+          menuToggle.setAttribute("aria-expanded", "false");
+        }
+
+        if (header && menuToggle && menuBar) {
+          menuToggle.addEventListener("click", function(event) {
+            var isOpen = menuBar.classList.toggle("is-visible");
+            menuToggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
+            event.stopPropagation();
+          });
+
+          menuBar.addEventListener("click", closeMenu);
+
+          document.addEventListener("click", function(event) {
+            if (!header.contains(event.target) && !menuBar.contains(event.target)) {
+              closeMenu();
+            }
+          });
+
+          document.addEventListener("keydown", function(event) {
+            if (event.key === "Escape") {
+              closeMenu();
+            }
+          });
+
+          if ("addEventListener" in portraitQuery) {
+            portraitQuery.addEventListener("change", function(event) {
+              if (!event.matches) {
+                closeMenu();
+              }
+            });
+          } else if ("addListener" in portraitQuery) {
+            portraitQuery.addListener(function(event) {
+              if (!event.matches) {
+                closeMenu();
+              }
+            });
+          }
+        }
       })();
     </script>
     {% if page.home_matrix %}
