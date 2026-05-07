@@ -52,8 +52,11 @@ body {
   position: relative;
   background: var(--bg);
   color: var(--fg);
-  font-family: "Inter", sans-serif;
-  line-height: 1.5;
+  font-family: "Instrument Sans", sans-serif;
+  font-size: 1.05rem;
+  font-stretch: 90%;
+  font-weight: 425;
+  line-height: 1.45;
 }
 
 body.page-has-matrix {
@@ -126,7 +129,7 @@ main,
   gap: 1rem;
   font-size: 0.95rem;
   flex-wrap: wrap;
-  font-family: "Inter", sans-serif;
+  font-family: "Instrument Sans", sans-serif;
   justify-self: start;
   align-items: center;
 }
@@ -146,9 +149,9 @@ main,
   overflow: hidden;
   text-overflow: ellipsis;
   text-decoration: none;
-  font-family: "Inter", sans-serif;
+  font-family: "Instrument Sans", sans-serif;
   font-size: 0.95rem;
-  font-weight: 400;
+  font-weight: 425;
   line-height: 1.5;
   white-space: nowrap;
   border-bottom: 1px solid transparent;
@@ -199,7 +202,7 @@ main,
   gap: 0.75rem;
   font-size: 0.9rem;
   color: var(--muted);
-  font-family: "Inter", sans-serif;
+  font-family: "Instrument Sans", sans-serif;
 }
 
 .theme-toggle-control {
@@ -277,9 +280,9 @@ main,
   text-overflow: ellipsis;
   white-space: nowrap;
   text-decoration: none;
-  font-family: "Inter", sans-serif;
+  font-family: "Instrument Sans", sans-serif;
   font-size: 0.95rem;
-  font-weight: 400;
+  font-weight: 425;
   line-height: 1.5;
   border-bottom: 1px solid transparent;
 }
@@ -308,18 +311,18 @@ main,
 .home-copy {
   position: relative;
   z-index: 1;
-  justify-self: end;
-  width: 75%;
-  margin-right: 5vw;
+  justify-self: center;
+  width: 100%;
+  margin-right: 0;
 }
 
 .home h1 {
   margin: 0;
   font-size: 6vw;
   line-height: 0.98;
-  font-family: "Inter Tight", "Inter", sans-serif;
-  font-weight: 700;
-  text-align: right;
+  font-family: "Instrument Serif", serif;
+  font-weight: 400;
+  text-align: center;
   white-space: nowrap;
 }
 
@@ -379,7 +382,7 @@ main,
     padding-left: 1.25rem;
     padding-right: 1.25rem;
     font-size: 0.95rem;
-    font-family: "Inter", sans-serif;
+    font-family: "Instrument Sans", sans-serif;
   }
 
   .site-menu-bar a {
@@ -467,7 +470,7 @@ main,
   margin-bottom: 1rem;
   font-size: clamp(2rem, 6vw, 3.5rem);
   line-height: 1;
-  font-family: "Inter", sans-serif;
+  font-family: "Instrument Serif", serif;
   font-weight: 400;
 }
 
@@ -500,8 +503,8 @@ main,
 .post-header h1 {
   margin: 0;
   font-size: clamp(2.75rem, 8vw, 5rem);
-  font-family: "Inter Tight", "Inter", sans-serif;
-  font-weight: 700;
+  font-family: "Instrument Serif", serif;
+  font-weight: 400;
   line-height: 0.98;
 }
 
@@ -512,28 +515,28 @@ main,
 .post > h1 {
   margin-top: 2.5rem;
   margin-bottom: 1rem;
-  font-size: clamp(1.6rem, 4.2vw, 2.15rem);
+  font-size: clamp(1.8rem, 4.6vw, 2.4rem);
   line-height: 1.1;
-  font-family: "Inter", sans-serif;
-  font-weight: 700;
+  font-family: "Instrument Serif", serif;
+  font-weight: 400;
 }
 
 .post > h2 {
   margin-top: 2.5rem;
   margin-bottom: 1rem;
-  font-size: clamp(1.35rem, 3.2vw, 1.9rem);
+  font-size: clamp(1.55rem, 3.6vw, 2.1rem);
   line-height: 1.1;
-  font-family: "Inter", sans-serif;
-  font-weight: 700;
+  font-family: "Instrument Serif", serif;
+  font-weight: 400;
 }
 
 .post > h3 {
   margin-top: 2rem;
   margin-bottom: 0.75rem;
-  font-size: clamp(1.1rem, 2.4vw, 1.35rem);
+  font-size: clamp(1.25rem, 2.7vw, 1.55rem);
   line-height: 1.2;
-  font-family: "Inter", sans-serif;
-  font-weight: 700;
+  font-family: "Instrument Serif", serif;
+  font-weight: 400;
 }
 
 blockquote {
